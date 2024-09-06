@@ -1,3 +1,4 @@
+import { Button } from "@/components/ui/button";
 import {
 	Card,
 	CardContent,
@@ -8,7 +9,6 @@ import {
 import { Input } from "@/components/ui/input";
 import { meilisearch } from "@/lib/melisearch";
 import { createFileRoute } from "@tanstack/react-router";
-import { Button } from "@/components/ui/button";
 import { SquareArrowOutUpRight } from "lucide-react";
 
 export const Route = createFileRoute("/")({
