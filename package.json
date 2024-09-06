@@ -1,0 +1,26 @@
+{
+  "name": "sfc-syllabus-seacher",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "format": "biome format . --write",
+    "lint": "biome check .",
+    "lint:fix": "pnpm lint --apply",
+    "lint:repo": "sherif"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@biomejs/biome": "1.8.3",
+    "sherif": "^1.0.0",
+    "simple-git-hooks": "^2.11.1",
+    "tsx": "^4.19.0",
+    "typescript": "^5.5.4"
+  },
+  "simple-git-hooks": {
+    "pre-commit": "pnpm format && pnpm lint:fix && pnpm lint:repo"
+  }
+}
