@@ -1,12 +1,15 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { Input } from "@/components/ui/input";
 import {
 	Card,
+	CardContent,
+	CardDescription,
 	CardHeader,
 	CardTitle,
-	CardDescription,
 } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
 import { meilisearch } from "@/lib/melisearch";
+import { createFileRoute } from "@tanstack/react-router";
+import { Button } from "@/components/ui/button";
+import { SquareArrowOutUpRight } from "lucide-react";
 
 export const Route = createFileRoute("/")({
 	component: Index,
@@ -32,7 +35,28 @@ function Index() {
 	const data = Route.useLoaderData();
 	const navigate = Route.useNavigate();
 
-	console.log(data);
+	const hasPrevious = deps.p > 1;
+	const hasNext = deps.p < data.totalPages;
+
+	const nextPage = () => {
+		navigate({
+			to: "/",
+			search: {
+				q: deps.q,
+				p: deps.p + 1,
+			},
+		});
+	};
+
+	const previousPage = () => {
+		navigate({
+			to: "/",
+			search: {
+				q: deps.q,
+				p: deps.p - 1,
+			},
+		});
+	};
 
 	const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
 		navigate({
@@ -56,17 +80,73 @@ function Index() {
 					onChange={handleSearch}
 				/>
 			</div>
+			<div className="flex justify-between mb-4">
+				<Button
+					className="w-32 gap-2"
+					variant="outline"
+					disabled={!hasPrevious}
+					onClick={previousPage}
+				>
+					Previous
+				</Button>
+				<Button
+					className="w-24"
+					variant="outline"
+					disabled={!hasNext}
+					onClick={nextPage}
+				>
+					Next
+				</Button>
+			</div>
 			<div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
 				{data.hits.map((hit) => (
 					<Card key={hit.id}>
-						<CardHeader>
-							<CardTitle>{hit.title}</CardTitle>
-							<CardDescription className="line-clamp-6">
-								{hit.description}
-							</CardDescription>
+						<CardHeader className="flex flex-row justify-between">
+							<div>
+								<CardTitle>{hit.title}</CardTitle>
+								<CardDescription className="line-clamp-6 flex gap-2">
+									<span className="font-semibold">
+										{hit.course_id.slice(0, -3)}
+									</span>
+									<span className="font-semibold">
+										{hit.schedules.join(" ")}
+									</span>
+								</CardDescription>
+							</div>
+
+							<Button asChild size="icon" variant="ghost" className="shrink-0">
+								<a
+									href={`https://syllabus.sfc.keio.ac.jp/courses/${hit.course_id.slice(0, -3)}`}
+									target="_blank"
+									rel="noreferrer"
+								>
+									<SquareArrowOutUpRight className="w-6 h-6" />
+								</a>
+							</Button>
 						</CardHeader>
+						<CardContent>
+							<div className="line-clamp-6 text-sm">{hit.description}</div>
+						</CardContent>
 					</Card>
 				))}
+			</div>
+			<div className="flex justify-between mb-4">
+				<Button
+					className="w-24"
+					variant="outline"
+					disabled={!hasPrevious}
+					onClick={previousPage}
+				>
+					Previous
+				</Button>
+				<Button
+					className="w-24"
+					variant="outline"
+					disabled={!hasNext}
+					onClick={nextPage}
+				>
+					Next
+				</Button>
 			</div>
 		</div>
 	);
