@@ -74,7 +74,7 @@ function Index() {
 			<div className="flex space-x-2 mb-4">
 				<Input
 					type="text"
-					placeholder="本のタイトルまたは著者を入力"
+					placeholder="雑にキーワードを入力 (例: なんかプログラミング的な)"
 					className="flex-grow"
 					defaultValue={deps.q}
 					onChange={handleSearch}
