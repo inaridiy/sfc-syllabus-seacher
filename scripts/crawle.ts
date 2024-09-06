@@ -1,6 +1,6 @@
-// Add import of CheerioCrawler
-import { RequestQueue, CheerioCrawler } from "crawlee";
 import fs from "node:fs/promises";
+// Add import of CheerioCrawler
+import { CheerioCrawler, RequestQueue } from "crawlee";
 
 const requestQueue = await RequestQueue.open();
 await requestQueue.addRequest({

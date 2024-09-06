@@ -33,6 +33,12 @@ const addEmbeddingsTask = await index.updateSettings({
 			model: "text-embedding-3-large",
 			dimensions: 1536,
 		},
+		small: {
+			source: "openAi",
+			apiKey: process.env.OPENAI_API_KEY,
+			model: "text-embedding-3-small",
+			dimensions: 1536,
+		},
 	},
 });
 

@@ -16,7 +16,9 @@ const documents = jsonl
 
 	.map((document) => {
 		const { content } = document;
-		const courseId = document.url.match(/courses\/(.*)\?/)?.[1];
+		const courseId = document.url
+			.match(/courses\/(.*)/)?.[1]
+			.replace("?locale=", "_");
 		const $ = cheerio.load(content);
 		const title = $("span.title").text().trim();
 		const body = $(".detail-info").text().trim();
@@ -46,21 +48,8 @@ const documents = jsonl
 
 const index = await meilisearch.getIndex("syllabus");
 
-if (!index) throw new Error("Index not found");
-const deleteTask = await index.deleteAllDocuments();
-await meilisearch.waitForTask(deleteTask.taskUid);
-
-const chunk = <T>(array: T[], size: number): T[][] => {
-	return array.reduce((acc, _, i) => {
-		if (i % size === 0) acc.push([]);
-		acc[acc.length - 1].push(array[i]);
-		return acc;
-	}, [] as T[][]);
-};
-
-for (const chunkedDocuments of chunk(documents, 100)) {
-	const task = await index.addDocuments(chunkedDocuments);
-	await meilisearch.waitForTask(task.taskUid, { timeOutMs: 100 * 1000 });
-	console.log(`Added ${chunkedDocuments.length} documents`);
-	await new Promise((resolve) => setTimeout(resolve, 10000));
-}
+console.log(`Adding ${documents.length} documents to meilisearch...`);
+const task = await index.addDocuments(documents);
+console.log(`Task ${task.taskUid} created`);
+await index.waitForTask(task.taskUid);
+console.log(`Task ${task.taskUid} completed`);
