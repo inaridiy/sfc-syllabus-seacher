@@ -17,10 +17,18 @@
 	"author": "",
 	"license": "MIT",
 	"dependencies": {
+		"@radix-ui/react-slot": "^1.1.0",
 		"@tanstack/react-router": "^1.56.1",
+		"cheerio": "^1.0.0",
+		"class-variance-authority": "^0.7.0",
+		"clsx": "^2.1.1",
+		"crawlee": "^3.11.3",
+		"lucide-react": "^0.439.0",
 		"meilisearch": "^0.42.0",
 		"react": "^18.3.1",
-		"react-dom": "^18.3.1"
+		"react-dom": "^18.3.1",
+		"tailwind-merge": "^2.5.2",
+		"tailwindcss-animate": "^1.0.7"
 	},
 	"devDependencies": {
 		"@biomejs/biome": "1.8.3",
