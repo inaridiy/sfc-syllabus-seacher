@@ -1,26 +1,36 @@
 {
-  "name": "sfc-syllabus-seacher",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "dev": "tsx watch src/index.ts",
-    "format": "biome format . --write",
-    "lint": "biome check .",
-    "lint:fix": "pnpm lint --apply",
-    "lint:repo": "sherif"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "devDependencies": {
-    "@biomejs/biome": "1.8.3",
-    "sherif": "^1.0.0",
-    "simple-git-hooks": "^2.11.1",
-    "tsx": "^4.19.0",
-    "typescript": "^5.5.4"
-  },
-  "simple-git-hooks": {
-    "pre-commit": "pnpm format && pnpm lint:fix && pnpm lint:repo"
-  }
+	"name": "sfc-syllabus-seacher",
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
+	"type": "module",
+	"scripts": {
+		"dev": "vite",
+		"build": "tsc -b && vite build",
+		"preview": "vite preview",
+		"format": "biome format . --write",
+		"lint": "biome check .",
+		"lint:fix": "pnpm lint --write",
+		"lint:type": "tsc --noEmit"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "MIT",
+	"dependencies": {
+		"react": "^18.3.1",
+		"react-dom": "^18.3.1"
+	},
+	"devDependencies": {
+		"@biomejs/biome": "1.8.3",
+		"@types/react": "^18.3.5",
+		"@types/react-dom": "^18.3.0",
+		"@vitejs/plugin-react": "^4.3.1",
+		"simple-git-hooks": "^2.11.1",
+		"tsx": "^4.19.0",
+		"typescript": "^5.5.4",
+		"vite": "^5.4.3"
+	},
+	"simple-git-hooks": {
+		"pre-commit": "pnpm format && pnpm lint:fix && pnpm lint:type"
+	}
 }
